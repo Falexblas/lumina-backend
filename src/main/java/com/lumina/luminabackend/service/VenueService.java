@@ -4,7 +4,7 @@ package com.lumina.luminabackend.service;
 import com.lumina.luminabackend.dto.venue.*;
 import com.lumina.luminabackend.entity.district.District;
 import com.lumina.luminabackend.entity.venue.Venue;
-import com.lumina.luminabackend.entity.venue.VenuePhoto;
+
 import com.lumina.luminabackend.entity.venue.VenueStatus;
 import com.lumina.luminabackend.exception.DuplicateResourceException;
 import com.lumina.luminabackend.exception.ResourceNotFoundException;
