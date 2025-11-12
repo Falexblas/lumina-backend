@@ -123,8 +123,10 @@ public class AuthService {
                 .userId(user.getUserId())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
+                .dni(user.getDni())
                 .email(user.getEmail())
                 .phone(user.getPhone())
+                .registrationDate(user.getRegistrationDate())
                 .roleName(user.getRole().getRoleName())
                 .build();
     }
