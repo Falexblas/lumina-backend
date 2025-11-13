@@ -42,7 +42,7 @@ public class InitialAdminSetup implements CommandLineRunner {
             userRepository.save(admin);
             System.out.println("Usuario ADMIN creado: " + adminEmail + " / admin123");
         } else {
-            System.out.println("ℹEl usuario ADMIN ya existe, no se creó otro.");
+            System.out.println("El usuario ADMIN ya existe, no se creó otro.");
         }
     }
 }

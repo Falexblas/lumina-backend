@@ -14,13 +14,13 @@ VALUES ('Miraflores'),
        ('San Borja');
 
 -- ===== INSERTAR TIPOS DE EVENTO =====
-INSERT INTO tipos_evento (nombre_tipo, descripcion)
-VALUES ('Boda', 'Ceremonias matrimoniales y recepciones'),
-       ('Conferencia', 'Charlas empresariales y seminarios'),
-       ('Cumpleaños', 'Celebraciones de cumpleaños y fiestas familiares'),
-       ('Concierto', 'Eventos musicales y presentaciones artísticas'),
-       ('Graduación', 'Ceremonias de graduación'),
-       ('Corporativo', 'Eventos empresariales');
+INSERT INTO tipos_evento (nombre_tipo, descripcion, url_foto)
+VALUES ('Boda', 'Ceremonias matrimoniales y recepciones', 'https://images.unsplash.com/photo-1757589166064-ef528f309c94?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=715' ),
+       ('Conferencia', 'Charlas empresariales y seminarios', 'https://images.unsplash.com/photo-1560523160-c4ef2f0c61a9?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170'),
+       ('Cumpleaños', 'Celebraciones de cumpleaños y fiestas familiares', 'https://images.unsplash.com/photo-1556125574-d7f27ec36a06?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170'),
+       ('Concierto', 'Eventos musicales y presentaciones artísticas', 'https://images.unsplash.com/photo-1576941230616-1df1071ff6c0?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1074'),
+       ('Graduación', 'Ceremonias de graduación', 'https://images.unsplash.com/photo-1599943821034-8cb5c7526922?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=759'),
+       ('Corporativo', 'Eventos empresariales', 'https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170');
 
 -- ===== INSERTAR MOBILIARIOS =====
 INSERT INTO mobiliario (nombre, descripcion, stock_total, precio_unitario, url_foto)
@@ -49,7 +49,7 @@ VALUES ('Salón Dorado', 'Av. Pardo 123, Miraflores', 1, 200, 500.00,
         'Hermosa terraza con jardín, perfecta para eventos al aire libre', 'AVAILABLE'),
        ('Centro Empresarial', 'Av. Javier Prado 789, Surco', 3, 500, 800.00,
         'Moderno centro de convenciones con tecnología de punta', 'AVAILABLE'),
-       ('Casa Colonial', 'Calle San Martín 321, La Molina', 4, 120, 350.00,
+       ('Casa La Molina', 'Urb. La Molina Vieja, La Molina', 4, 120, 350.00,
         'Ambiente colonial con arquitectura histórica', 'AVAILABLE'),
        ('Roof Top Barranco', 'Av. Grau 567, Barranco', 5, 100, 450.00,
         'Azotea con vista panorámica del distrito bohemio', 'AVAILABLE'),
@@ -69,18 +69,24 @@ VALUES
 (1, 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800', 'Montaje para boda'),
 
 -- Terraza Verde
-(2, 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=800', 'Terraza con jardín'),
-(2, 'https://images.unsplash.com/photo-1505236858219-8359eb29e329?w=800', 'Vista nocturna'),
+(2, 'https://images.unsplash.com/photo-1734705797907-a2ad9e6c71a2?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDJ8fHxlbnwwfHx8fHw%3D', 'Terraza con jardín vertical'),
+(2, 'https://images.unsplash.com/photo-1734705797879-0c23e9edca21?q=80&w=1169&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Vista superior'),
+(2, 'https://images.unsplash.com/photo-1734705797834-a356d77e4140?q=80&w=1169&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Vista interior'),
 
 -- Centro Empresarial
-(3, 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=800', 'Auditorio principal'),
-(3, 'https://images.unsplash.com/photo-1542744095-291d1f67b221?w=800', 'Sala de conferencias'),
+(3, 'https://images.unsplash.com/photo-1603430416695-752802223e94?q=80&w=1576&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Auditorio principal'),
+(3, 'https://images.unsplash.com/photo-1603430416807-87dd6f9538d0?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDV8fHxlbnwwfHx8fHw%3D', 'Sala de conferencias'),
+(3, 'https://images.unsplash.com/photo-1629969338712-472f4440929d?q=80&w=1218&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Sala de conferencias'),
 
--- Casa Colonial
-(4, 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800', 'Patio colonial'),
+-- Casa La Molina
+(4, 'https://images.unsplash.com/photo-1658951874380-aa791f7aec29?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Patio colonial'),
+(4, 'https://images.unsplash.com/photo-1658951874107-b597582d3768?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDJ8fHxlbnwwfHx8fHw%3D', 'Patio colonial'),
+(4, 'https://images.unsplash.com/photo-1658951868644-4b7aba111915?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Patio colonial'),
 
 -- Roof Top Barranco
-(5, 'https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=800', 'Vista panorámica'),
+(5, 'https://images.unsplash.com/photo-1752857015590-ab5254f2523f?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Vista panorámica'),
+(5, 'https://images.unsplash.com/photo-1752857015570-2fcc1c8a6350?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Vista panorámica'),
+(5, 'https://images.unsplash.com/photo-1752857015560-d5c05b3f7ecb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDJ8fHxlbnwwfHx8fHw%3D', 'Vista panorámica'),
 
 -- Salón Crystal
 (6, 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800', 'Cristalería elegante'),

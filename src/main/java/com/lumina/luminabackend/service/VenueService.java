@@ -58,28 +58,48 @@ public class VenueService {
 
     @Transactional(readOnly = true)
     public List<VenueCardDTO> searchWithFilters(VenueFilterDTO filters) {
-        return venueRepository.findWithFilters(
-                VenueStatus.AVAILABLE,
-                        filters.getDistrictId(),
-                        filters.getEventTypeId(),
-                        filters.getMinCapacity(),
-                        filters.getMinPrice(),
-                        filters.getMaxPrice()
-                ).stream()
+        List<Venue> venues;
+
+        if (filters.getEventTypeId() != null) {
+            venues = venueRepository.findWithEventTypeFilter(
+                    VenueStatus.AVAILABLE,
+                    filters.getDistrictId(),
+                    filters.getEventTypeId(),
+                    filters.getMinCapacity(),
+                    filters.getMinPrice(),
+                    filters.getMaxPrice()
+            );
+        } else {
+            venues = venueRepository.findWithoutEventTypeFilter(
+                    VenueStatus.AVAILABLE,
+                    filters.getDistrictId(),
+                    filters.getMinCapacity(),
+                    filters.getMinPrice(),
+                    filters.getMaxPrice()
+            );
+        }
+
+        if (!venues.isEmpty()) {
+            List<Integer> venueIds = venues.stream()
+                    .map(Venue::getVenueId)
+                    .toList();
+
+            venueRepository.loadEventTypesByVenueIds(venueIds);
+        }
+
+        return venues.stream()
                 .map(this::convertToCardDTO)
                 .collect(Collectors.toList());
     }
-
 
     /**
      * Admin methods
      */
     @Transactional(readOnly = true)
     public List<AdminVenueDTO> findAllForAdmin() {
-        // Primera query: cargar venues con district y photos
+
         List<Venue> venues = venueRepository.findAllWithDetails();
-        
-        // Segunda query: cargar eventTypes (evita MultipleBagFetchException)
+
         if (!venues.isEmpty()) {
             venueRepository.findAllWithEventTypes();
         }
@@ -123,6 +143,9 @@ public class VenueService {
                 .maxCapacity(createDTO.getMaxCapacity())
                 .pricePerHour(createDTO.getPricePerHour())
                 .description(createDTO.getDescription())
+                .latitude(createDTO.getLatitude())
+                .longitude(createDTO.getLongitude())
+                .googleMapsUrl(createDTO.getGoogleMapsUrl())
                 .status(VenueStatus.AVAILABLE)
                 .build();
 
@@ -162,7 +185,17 @@ public class VenueService {
         if (updateDTO.getDescription() != null) {
             venue.setDescription(updateDTO.getDescription());
         }
+        if (updateDTO.getLatitude() != null) {
+            venue.setLatitude(updateDTO.getLatitude());
+        }
 
+        if (updateDTO.getLongitude() != null) {
+            venue.setLongitude(updateDTO.getLongitude());
+        }
+
+        if (updateDTO.getGoogleMapsUrl() != null) {
+            venue.setGoogleMapsUrl(updateDTO.getGoogleMapsUrl());
+        }
         if (updateDTO.getStatus() != null) {
             venue.setStatus(VenueStatus.valueOf(updateDTO.getStatus()));
         }
@@ -218,6 +251,9 @@ public class VenueService {
                 .fullDescription(venue.getDescription())
                 .photos(getAllPhotos(venue))
                 .availableEventTypes(getEventTypes(venue))
+                .latitude(venue.getLatitude())
+                .longitude(venue.getLongitude())
+                .googleMapsUrl(venue.getGoogleMapsUrl())
                 .status(venue.getStatus().getValue())
                 .build();
     }
@@ -244,6 +280,9 @@ public class VenueService {
                 .photos(String.join(",", getAllPhotos(venue)))
                 .availableEventTypes(String.join(",", getEventTypes(venue)))
                 .availableEventTypeIds(String.join(",", getEventTypeIds(venue)))
+                .latitude(venue.getLatitude())
+                .longitude(venue.getLongitude())
+                .googleMapsUrl(venue.getGoogleMapsUrl())
                 .status(venue.getStatus().name())
                 .build();
     }

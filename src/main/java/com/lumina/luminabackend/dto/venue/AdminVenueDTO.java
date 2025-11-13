@@ -21,4 +21,7 @@ public class AdminVenueDTO {
     private String availableEventTypes; // Comma separated type names
     private String availableEventTypeIds; // Comma separated type IDs
     private String status;
+    private Double latitude;
+    private Double longitude;
+    private String googleMapsUrl;
 }

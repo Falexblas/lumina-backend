@@ -46,6 +46,12 @@ public class VenueController {
             @RequestParam(required = false) BigDecimal minPrice,
             @RequestParam(required = false) BigDecimal maxPrice
     ) {
+        System.out.println("districtId: " + districtId);
+        System.out.println("eventTypeId: " + eventTypeId);
+        System.out.println("minCapacity: " + minCapacity);
+        System.out.println("minPrice: " + minPrice);
+        System.out.println("maxPrice: " + maxPrice);
+
         VenueFilterDTO filters = VenueFilterDTO.builder()
                 .districtId(districtId)
                 .eventTypeId(eventTypeId)
