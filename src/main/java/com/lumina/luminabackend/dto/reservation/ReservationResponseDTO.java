@@ -31,6 +31,12 @@ public class ReservationResponseDTO {
     private Integer eventTypeId;
     private String eventTypeName;
 
+    // Información del cliente (para admin)
+    private Integer userId;
+    private String customerName;
+    private String customerEmail;
+    private String customerPhone;
+
     private List<FurnitureItemDTO> furnitureItems;
 
     @Data

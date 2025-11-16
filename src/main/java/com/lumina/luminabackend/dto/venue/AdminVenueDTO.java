@@ -18,6 +18,7 @@ public class AdminVenueDTO {
     private String description;
     private String mainPhotoUrl;
     private String photos; // Comma separated URLs
-    private String availableEventTypes; // Comma separated types
+    private String availableEventTypes; // Comma separated type names
+    private String availableEventTypeIds; // Comma separated type IDs
     private String status;
 }

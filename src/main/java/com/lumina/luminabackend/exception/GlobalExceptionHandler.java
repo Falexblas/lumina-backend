@@ -68,6 +68,14 @@ public class GlobalExceptionHandler {
                 .body(ApiResponseDTO.error("Email o contraseña incorrectos"));
     }
 
+    /** Business logic error, validation failed, 400 */
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<ApiResponseDTO<Void>> handleBusinessException(
+            BusinessException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ApiResponseDTO.error(ex.getMessage()));
+    }
+
     /** Generic, internal server error with logger SLF4J, 500 */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponseDTO<Void>> handleGenericException(Exception ex) {

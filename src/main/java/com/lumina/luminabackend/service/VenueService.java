@@ -4,12 +4,15 @@ package com.lumina.luminabackend.service;
 import com.lumina.luminabackend.dto.venue.*;
 import com.lumina.luminabackend.entity.district.District;
 import com.lumina.luminabackend.entity.venue.Venue;
-import com.lumina.luminabackend.entity.venue.VenuePhoto;
+
 import com.lumina.luminabackend.entity.venue.VenueStatus;
+import com.lumina.luminabackend.entity.reservation.ReservationStatus;
 import com.lumina.luminabackend.exception.DuplicateResourceException;
 import com.lumina.luminabackend.exception.ResourceNotFoundException;
+import com.lumina.luminabackend.exception.BusinessException;
 import com.lumina.luminabackend.repository.district.DistrictRepository;
 import com.lumina.luminabackend.repository.venue.VenueRepository;
+import com.lumina.luminabackend.repository.reservation.ReservationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +27,7 @@ public class VenueService {
 
     private final VenueRepository venueRepository;
     private final DistrictRepository districtRepository;
+    private final ReservationRepository reservationRepository;
 
     /**
      * Client methods
@@ -72,8 +76,15 @@ public class VenueService {
      */
     @Transactional(readOnly = true)
     public List<AdminVenueDTO> findAllForAdmin() {
-        return venueRepository.findAllWithDetails()
-                .stream()
+        // Primera query: cargar venues con district y photos
+        List<Venue> venues = venueRepository.findAllWithDetails();
+        
+        // Segunda query: cargar eventTypes (evita MultipleBagFetchException)
+        if (!venues.isEmpty()) {
+            venueRepository.findAllWithEventTypes();
+        }
+        
+        return venues.stream()
                 .map(this::convertToAdminDTO)
                 .collect(Collectors.toList());
     }
@@ -82,6 +93,10 @@ public class VenueService {
     public AdminVenueDTO findByIdForAdmin(Integer id) {
         Venue venue = venueRepository.findByIdWithDetails(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Local no encontrado con ID: " + id));
+        
+        // Cargar eventTypes en segunda query
+        venueRepository.findByIdWithEventTypes(id);
+        
         return convertToAdminDTO(venue);
     }
 
@@ -159,6 +174,19 @@ public class VenueService {
         if (!venueRepository.existsById(id)) {
             throw new ResourceNotFoundException("Local no encontrado con ID: " + id);
         }
+        
+        // Validar que no tenga reservas confirmadas
+        long confirmedReservations = reservationRepository.countByVenueVenueIdAndStatus(id, ReservationStatus.CONFIRMED);
+        if (confirmedReservations > 0) {
+            throw new BusinessException("No se puede eliminar el local porque tiene " + confirmedReservations + " reserva(s) confirmada(s)");
+        }
+        
+        // Validar que no tenga reservas pendientes
+        long pendingReservations = reservationRepository.countByVenueVenueIdAndStatus(id, ReservationStatus.PENDING);
+        if (pendingReservations > 0) {
+            throw new BusinessException("No se puede eliminar el local porque tiene " + pendingReservations + " reserva(s) pendiente(s)");
+        }
+        
         venueRepository.deleteById(id);
     }
 
@@ -215,6 +243,7 @@ public class VenueService {
                 .mainPhotoUrl(getMainPhoto(venue))
                 .photos(String.join(",", getAllPhotos(venue)))
                 .availableEventTypes(String.join(",", getEventTypes(venue)))
+                .availableEventTypeIds(String.join(",", getEventTypeIds(venue)))
                 .status(venue.getStatus().name())
                 .build();
     }
@@ -244,6 +273,15 @@ public class VenueService {
         }
         return venue.getVenueEventTypes().stream()
                 .map(vet -> vet.getEventType().getEventTypeName())
+                .collect(Collectors.toList());
+    }
+
+    private List<String> getEventTypeIds(Venue venue) {
+        if (venue.getVenueEventTypes() == null || venue.getVenueEventTypes().isEmpty()) {
+            return List.of();
+        }
+        return venue.getVenueEventTypes().stream()
+                .map(vet -> String.valueOf(vet.getEventType().getEventTypeId()))
                 .collect(Collectors.toList());
     }
 }

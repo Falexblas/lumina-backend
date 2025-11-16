@@ -46,17 +46,26 @@ public interface VenueRepository extends JpaRepository<Venue, Integer> {
     @Query("SELECT DISTINCT v FROM Venue v " +
             "LEFT JOIN FETCH v.district " +
             "LEFT JOIN FETCH v.photos " +
-            "LEFT JOIN FETCH v.venueEventTypes vet " +
-            "LEFT JOIN FETCH vet.eventType " +
             "WHERE v.venueId = :id")
     Optional<Venue> findByIdWithDetails(@Param("id") Integer id);
 
     @Query("SELECT DISTINCT v FROM Venue v " +
+            "LEFT JOIN FETCH v.venueEventTypes vet " +
+            "LEFT JOIN FETCH vet.eventType " +
+            "WHERE v.venueId = :id")
+    Optional<Venue> findByIdWithEventTypes(@Param("id") Integer id);
+
+    @Query("SELECT DISTINCT v FROM Venue v " +
             "LEFT JOIN FETCH v.district " +
             "LEFT JOIN FETCH v.photos " +
-            "LEFT JOIN FETCH v.venueEventTypes vet " +
-            "LEFT JOIN FETCH vet.eventType")
+            "ORDER BY v.venueId")
     List<Venue> findAllWithDetails();
+
+    @Query("SELECT DISTINCT v FROM Venue v " +
+            "LEFT JOIN FETCH v.venueEventTypes vet " +
+            "LEFT JOIN FETCH vet.eventType " +
+            "ORDER BY v.venueId")
+    List<Venue> findAllWithEventTypes();
 
     @Query("SELECT DISTINCT v FROM Venue v " +
             "LEFT JOIN FETCH v.district " +
