@@ -12,13 +12,9 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class SecurityUtils {
 
-    private static UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    public SecurityUtils(UserRepository userRepository) {
-        SecurityUtils.userRepository = userRepository;
-    }
-
-    public static User getCurrentUser() {
+    public User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication == null || !authentication.isAuthenticated()) {
@@ -36,7 +32,7 @@ public class SecurityUtils {
         throw new RuntimeException("Usuario no válido");
     }
 
-    public static String getCurrentUserEmail() {
+    public String getCurrentUserEmail() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {

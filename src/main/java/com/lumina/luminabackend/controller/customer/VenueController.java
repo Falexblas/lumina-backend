@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -62,5 +63,11 @@ public class VenueController {
 
         List<VenueCardDTO> venues = venueService.searchWithFilters(filters);
         return ResponseEntity.ok(ApiResponseDTO.success("Búsqueda completada", venues));
+    }
+
+    @GetMapping("/{id}/unavailable-dates")
+    public ResponseEntity<ApiResponseDTO<List<LocalDate>>> getUnavailableDates(@PathVariable Integer id) {
+        List<LocalDate> unavailableDates = venueService.getUnavailableDates(id);
+        return ResponseEntity.ok(ApiResponseDTO.success("Fechas no disponibles obtenidas", unavailableDates));
     }
 }

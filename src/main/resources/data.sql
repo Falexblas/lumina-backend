@@ -41,24 +41,32 @@ VALUES ('Mesa Redonda', 'Mesa redonda para 8 personas', 50, 25.00,
        ('Iluminación LED', 'Sistema de luces LED decorativas', 15, 180.00,
         'https://images.unsplash.com/photo-1478147427282-58e87a9ce616?w=400');
 
--- ===== INSERTAR LOCALES (✅ CORREGIDO - Usar valores exactos del enum) =====
-INSERT INTO locales (nombre_local, direccion, id_distrito, aforo_maximo, precio_hora, descripcion, estado)
+-- ===== INSERTAR LOCALES (✅ CORREGIDO - Con ubicación geográfica) =====
+INSERT INTO locales (nombre_local, direccion, id_distrito, aforo_maximo, precio_hora, descripcion, estado, latitud, longitud, url_google_maps)
 VALUES ('Salón Dorado', 'Av. Pardo 123, Miraflores', 1, 200, 500.00,
-        'Elegante salón con vista al mar, ideal para bodas y eventos especiales', 'AVAILABLE'),
+        'Elegante salón con vista al mar, ideal para bodas y eventos especiales', 'AVAILABLE', -12.111627, -77.021151,
+        'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3901.0461505005206!2d-77.02145!3d-12.111627!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c8d4d4d4d4d5%3A0x0!2sMiraflores%2C%20Lima!5e0!3m2!1ses!2spe!4v1234567890'),
        ('Terraza Verde', 'Jr. Olivos 456, San Isidro', 2, 150, 400.00,
-        'Hermosa terraza con jardín, perfecta para eventos al aire libre', 'AVAILABLE'),
+        'Hermosa terraza con jardín, perfecta para eventos al aire libre', 'AVAILABLE', -12.091807, -77.031641,
+        'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3901.2168505005206!2d-77.031641!3d-12.091807!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c8a8a8a8a8a9%3A0x0!2sSan%20Isidro%2C%20Lima!5e0!3m2!1ses!2spe!4v1234567890'),
        ('Centro Empresarial', 'Av. Javier Prado 789, Surco', 3, 500, 800.00,
-        'Moderno centro de convenciones con tecnología de punta', 'AVAILABLE'),
+        'Moderno centro de convenciones con tecnología de punta', 'AVAILABLE', -12.055410, -77.025319,
+        'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3901.4875505005206!2d-77.025319!3d-12.055410!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c8d4d4d4d4d5%3A0x0!2sSurco%2C%20Lima!5e0!3m2!1ses!2spe!4v1234567890'),
        ('Casa La Molina', 'Urb. La Molina Vieja, La Molina', 4, 120, 350.00,
-        'Ambiente colonial con arquitectura histórica', 'AVAILABLE'),
+        'Ambiente colonial con arquitectura histórica', 'AVAILABLE', -12.072038, -76.984680,
+        'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3901.3168505005206!2d-76.984680!3d-12.072038!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c8d4d4d4d4d5%3A0x0!2sLa%20Molina%2C%20Lima!5e0!3m2!1ses!2spe!4v1234567890'),
        ('Roof Top Barranco', 'Av. Grau 567, Barranco', 5, 100, 450.00,
-        'Azotea con vista panorámica del distrito bohemio', 'AVAILABLE'),
+        'Azotea con vista panorámica del distrito bohemio', 'AVAILABLE', -12.142847, -77.028961,
+        'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3900.8755505005206!2d-77.028961!3d-12.142847!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c8d4d4d4d4d5%3A0x0!2sBarranco%2C%20Lima!5e0!3m2!1ses!2spe!4v1234567890'),
        ('Salón Crystal', 'Av. San Luis 890, San Borja', 6, 180, 480.00,
-        'Salón moderno con cristalería y acabados de lujo', 'UNAVAILABLE'),
+        'Salón moderno con cristalería y acabados de lujo', 'UNAVAILABLE', -12.095234, -76.998765,
+        'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3901.1968505005206!2d-76.998765!3d-12.095234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c8d4d4d4d4d5%3A0x0!2sSan%20Borja%2C%20Lima!5e0!3m2!1ses!2spe!4v1234567890'),
        ('Garden Party', 'Jr. Ica 234, Miraflores', 1, 80, 280.00, 'Jardín privado ideal para eventos íntimos',
-        'AVAILABLE'),
+        'AVAILABLE', -12.118456, -77.024890,
+        'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3900.9968505005206!2d-77.024890!3d-12.118456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c8d4d4d4d4d5%3A0x0!2sMiraflores%2C%20Lima!5e0!3m2!1ses!2spe!4v1234567890'),
        ('Loft Industrial', 'Av. Brasil 678, San Isidro', 2, 90, 320.00, 'Espacio industrial moderno con estilo urbano',
-        'AVAILABLE');
+        'AVAILABLE', -12.087654, -77.034567,
+        'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3901.2568505005206!2d-77.034567!3d-12.087654!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c8d4d4d4d4d5%3A0x0!2sSan%20Isidro%2C%20Lima!5e0!3m2!1ses!2spe!4v1234567890');
 
 -- ===== INSERTAR FOTOS DE LOCALES =====
 INSERT INTO fotos_locales (id_local, url_foto, descripcion)

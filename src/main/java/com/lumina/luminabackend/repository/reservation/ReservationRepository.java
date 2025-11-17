@@ -119,4 +119,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
            "GROUP BY et.eventTypeId, et.eventTypeName " +
            "ORDER BY reservationCount DESC")
     List<Object[]> findTopEventTypesByReservationCount();
+    
+    List<Reservation> findByVenueVenueIdAndStatusIn(Integer venueId, List<ReservationStatus> statuses);
 }

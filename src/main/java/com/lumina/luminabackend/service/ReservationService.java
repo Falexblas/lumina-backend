@@ -38,6 +38,7 @@ public class ReservationService {
     private final VenueRepository venueRepository;
     private final EventTypeRepository eventTypeRepository;
     private final FurnitureRepository furnitureRepository;
+    private final SecurityUtils securityUtils;
 
     public boolean checkAvailability(AvailabilityRequestDTO request) {
         List<Reservation> conflictingReservations = reservationRepository
@@ -117,7 +118,7 @@ public class ReservationService {
     @Transactional
     public ReservationResponseDTO createReservation(ReservationRequestDTO request) {
 
-        User currentUser = SecurityUtils.getCurrentUser();
+        User currentUser = securityUtils.getCurrentUser();
 
 
         AvailabilityRequestDTO availabilityCheck = new AvailabilityRequestDTO();
@@ -142,6 +143,9 @@ public class ReservationService {
                     ") excede la capacidad máxima del venue (" + venue.getMaxCapacity() + ")");
         }
 
+        // Determinar el estado: CONFIRMED si se proporciona paymentMethodId, sino PENDING
+        ReservationStatus status = request.getPaymentMethodId() != null ? 
+                ReservationStatus.CONFIRMED : ReservationStatus.PENDING;
 
         Reservation reservation = Reservation.builder()
                 .user(currentUser)
@@ -154,7 +158,7 @@ public class ReservationService {
                 .venueCost(request.getVenueCost())
                 .furnitureCost(request.getFurnitureCost() != null ? request.getFurnitureCost() : BigDecimal.ZERO)
                 .totalCost(request.getTotalCost())
-                .status(ReservationStatus.PENDING)
+                .status(status)
                 .createdAt(LocalDateTime.now())
                 .build();
 
@@ -195,7 +199,7 @@ public class ReservationService {
     }
 
     public List<ReservationResponseDTO> getMyReservations() {
-        User currentUser = SecurityUtils.getCurrentUser();
+        User currentUser = securityUtils.getCurrentUser();
 
         List<Reservation> reservations = reservationRepository
                 .findByUserOrderByCreatedAtDesc(currentUser);
@@ -206,7 +210,7 @@ public class ReservationService {
     }
 
     public ReservationSuccessDTO getReservationDetails(Integer reservationId) {
-        User currentUser = SecurityUtils.getCurrentUser();
+        User currentUser = securityUtils.getCurrentUser();
 
         Reservation reservation = reservationRepository.findById(reservationId)
                 .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
@@ -256,7 +260,7 @@ public class ReservationService {
 
     @Transactional
     public ReservationResponseDTO cancelReservation(Integer reservationId) {
-        User currentUser = SecurityUtils.getCurrentUser();
+        User currentUser = securityUtils.getCurrentUser();
 
         Reservation reservation = reservationRepository.findById(reservationId)
                 .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));

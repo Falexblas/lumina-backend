@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -89,6 +90,21 @@ public class VenueService {
 
         return venues.stream()
                 .map(this::convertToCardDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<LocalDate> getUnavailableDates(Integer venueId) {
+        if (!venueRepository.existsById(venueId)) {
+            throw new ResourceNotFoundException("Local no encontrado con ID: " + venueId);
+        }
+        
+        return reservationRepository.findByVenueVenueIdAndStatusIn(
+                venueId, 
+                List.of(ReservationStatus.CONFIRMED, ReservationStatus.PENDING)
+        ).stream()
+                .map(reservation -> reservation.getReservationDate())
+                .distinct()
                 .collect(Collectors.toList());
     }
 

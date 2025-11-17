@@ -12,6 +12,7 @@ public class UserProfileDTO {
     private String lastName;
     private String email;
     private String phone;
+    private String dni;
     private String roleName;
 
 }

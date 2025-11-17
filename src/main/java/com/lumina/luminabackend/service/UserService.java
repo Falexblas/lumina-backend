@@ -140,6 +140,7 @@ public class UserService {
                 .lastName(user.getLastName())
                 .email(user.getEmail())
                 .phone(user.getPhone())
+                .dni(user.getDni())
                 .roleName(user.getRole().getRoleName())
                 .build();
     }
