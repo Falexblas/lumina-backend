@@ -3,6 +3,7 @@ package com.lumina.luminabackend.service;
 
 import com.lumina.luminabackend.dto.venue.*;
 import com.lumina.luminabackend.entity.district.District;
+import com.lumina.luminabackend.entity.reservation.Reservation;
 import com.lumina.luminabackend.entity.venue.Venue;
 
 import com.lumina.luminabackend.entity.venue.VenueStatus;
@@ -67,6 +68,7 @@ public class VenueService {
                     filters.getDistrictId(),
                     filters.getEventTypeId(),
                     filters.getMinCapacity(),
+                    filters.getMaxCapacity(),
                     filters.getMinPrice(),
                     filters.getMaxPrice()
             );
@@ -75,6 +77,7 @@ public class VenueService {
                     VenueStatus.AVAILABLE,
                     filters.getDistrictId(),
                     filters.getMinCapacity(),
+                    filters.getMaxCapacity(),
                     filters.getMinPrice(),
                     filters.getMaxPrice()
             );
@@ -103,7 +106,7 @@ public class VenueService {
                 venueId, 
                 List.of(ReservationStatus.CONFIRMED, ReservationStatus.PENDING)
         ).stream()
-                .map(reservation -> reservation.getReservationDate())
+                .map(Reservation::getReservationDate)
                 .distinct()
                 .collect(Collectors.toList());
     }
