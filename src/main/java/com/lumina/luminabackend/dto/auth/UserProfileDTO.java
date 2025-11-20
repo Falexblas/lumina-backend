@@ -1,6 +1,8 @@
 package com.lumina.luminabackend.dto.auth;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -14,5 +16,6 @@ public class UserProfileDTO {
     private String phone;
     private String dni;
     private String roleName;
+    private LocalDateTime registrationDate;
 
 }

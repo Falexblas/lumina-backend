@@ -131,3 +131,8 @@ VALUES
 -- Loft Industrial (conciertos, corporativo)
 (8, 4),
 (8, 6);
+
+INSERT INTO metodos_pago (nombre_metodo, descripcion)
+VALUES ('Tarjeta', 'Pago con tarjeta de crédito o débito'),
+       ('Transferencia', 'Pago mediante transferencia bancaria con comprobante'),
+       ('PagoEfectivo', 'Pago en efectivo con código generado');

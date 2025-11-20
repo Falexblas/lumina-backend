@@ -44,12 +44,14 @@ public class VenueController {
             @RequestParam(required = false) Integer districtId,
             @RequestParam(required = false) Integer eventTypeId,
             @RequestParam(required = false) Integer minCapacity,
+            @RequestParam(required = false) Integer maxCapacity,
             @RequestParam(required = false) BigDecimal minPrice,
             @RequestParam(required = false) BigDecimal maxPrice
     ) {
         System.out.println("districtId: " + districtId);
         System.out.println("eventTypeId: " + eventTypeId);
         System.out.println("minCapacity: " + minCapacity);
+        System.out.println("maxCapacity: " + maxCapacity);
         System.out.println("minPrice: " + minPrice);
         System.out.println("maxPrice: " + maxPrice);
 
@@ -57,6 +59,7 @@ public class VenueController {
                 .districtId(districtId)
                 .eventTypeId(eventTypeId)
                 .minCapacity(minCapacity)
+                .maxCapacity(maxCapacity)
                 .minPrice(minPrice)
                 .maxPrice(maxPrice)
                 .build();

@@ -24,6 +24,7 @@ public interface VenueRepository extends JpaRepository<Venue, Integer> {
             "AND (:districtId IS NULL OR v.district.districtId = :districtId) " +
             "AND (:eventTypeId IS NULL OR et.eventTypeId = :eventTypeId) " +
             "AND (:minCapacity IS NULL OR v.maxCapacity >= :minCapacity) " +
+            "AND (:maxCapacity IS NULL OR v.maxCapacity < :maxCapacity) " +
             "AND (:minPrice IS NULL OR v.pricePerHour >= :minPrice) " +
             "AND (:maxPrice IS NULL OR v.pricePerHour <= :maxPrice) " +
             "ORDER BY v.venueId")
@@ -32,6 +33,7 @@ public interface VenueRepository extends JpaRepository<Venue, Integer> {
             @Param("districtId") Integer districtId,
             @Param("eventTypeId") Integer eventTypeId,
             @Param("minCapacity") Integer minCapacity,
+            @Param("maxCapacity") Integer maxCapacity,
             @Param("minPrice") BigDecimal minPrice,
             @Param("maxPrice") BigDecimal maxPrice
     );
@@ -42,6 +44,7 @@ public interface VenueRepository extends JpaRepository<Venue, Integer> {
             "WHERE v.status = :availableStatus " +
             "AND (:districtId IS NULL OR v.district.districtId = :districtId) " +
             "AND (:minCapacity IS NULL OR v.maxCapacity >= :minCapacity) " +
+            "AND (:maxCapacity IS NULL OR v.maxCapacity < :maxCapacity) " +
             "AND (:minPrice IS NULL OR v.pricePerHour >= :minPrice) " +
             "AND (:maxPrice IS NULL OR v.pricePerHour <= :maxPrice) " +
             "ORDER BY v.venueId")
@@ -49,6 +52,7 @@ public interface VenueRepository extends JpaRepository<Venue, Integer> {
             @Param("availableStatus") VenueStatus availableStatus,
             @Param("districtId") Integer districtId,
             @Param("minCapacity") Integer minCapacity,
+            @Param("maxCapacity") Integer maxCapacity,
             @Param("minPrice") BigDecimal minPrice,
             @Param("maxPrice") BigDecimal maxPrice
     );
