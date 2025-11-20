@@ -142,6 +142,7 @@ public class UserService {
                 .phone(user.getPhone())
                 .dni(user.getDni())
                 .roleName(user.getRole().getRoleName())
+                .registrationDate(user.getRegistrationDate())
                 .build();
     }
 }
