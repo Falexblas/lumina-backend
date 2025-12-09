@@ -24,22 +24,24 @@ VALUES ('Boda', 'Ceremonias matrimoniales y recepciones', 'https://images.unspla
 
 -- ===== INSERTAR MOBILIARIOS =====
 INSERT INTO mobiliario (nombre, descripcion, stock_total, precio_unitario, url_foto)
-VALUES ('Mesa Redonda', 'Mesa redonda para 8 personas', 50, 25.00,
-        'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400'),
-       ('Mesa Rectangular', 'Mesa rectangular para 10 personas', 40, 30.00,
-        'https://images.unsplash.com/photo-1549497538-303791108f95?w=400'),
-       ('Silla Tiffany', 'Silla elegante estilo Tiffany', 200, 8.00,
-        'https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?w=400'),
-       ('Silla Chiavari', 'Silla dorada estilo Chiavari', 150, 10.00,
-        'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400'),
-       ('Tarima', 'Tarima para eventos de 3x3 metros', 10, 150.00,
-        'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400'),
-       ('Equipo de Sonido', 'Sistema de audio profesional', 8, 200.00,
-        'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400'),
-       ('Proyector', 'Proyector HD con pantalla', 5, 120.00,
-        'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400'),
-       ('Iluminación LED', 'Sistema de luces LED decorativas', 15, 180.00,
-        'https://images.unsplash.com/photo-1478147427282-58e87a9ce616?w=400');
+VALUES ('Mesa Redonda', 'Mesa redonda modelo Cavari para 10 personas', 50, 25.00,
+        'https://images.unsplash.com/photo-1759955903787-08b20dd8a925?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
+       ('Mesa Rectangular', 'Mesa rectangular modelo Caela para 10 personas', 40, 30.00,
+        'https://images.unsplash.com/photo-1715592029240-81cb714785e1?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
+       ('Silla Tiffany', 'Silla elegante dorada estilo Tiffany', 200, 8.00,
+        'https://images.unsplash.com/photo-1528221297180-b340bcc21812?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTV8fHdlZGRpbmclMjBmdXJuaXR1cmV8ZW58MHx8MHx8fDA%3D'),
+       ('Silla Chiavari', 'Silla blanca estilo Chiavari', 150, 10.00,
+        'https://images.unsplash.com/photo-1739796089365-3280112c6329?q=80&w=1169&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
+       ('Catering Premium', 'Menú de 3 tiempos, incluye personal y menaje', 100000, 50.00,
+        'https://images.unsplash.com/photo-1751163781124-85bd6628de1e?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
+       ('Servicio de Bar', 'Barra libre 4 horas', 100000, 2000.00,
+        'https://plus.unsplash.com/premium_photo-1764196527164-8a3ae326e11d?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
+       ('Dj', 'Incluye equipo de sonido',10000, 1500.00,
+        'https://images.unsplash.com/photo-1713450602872-9e7587ea22ae?q=80&w=1760&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
+       ('Fotografía y Video', 'Cobertura completa + edición', 10000, 2500.00,
+        'https://images.unsplash.com/photo-1541515929569-1771522cbaa9?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
+       ('Servicios obligatorios', 'Servicio de limpieza, seguridad y garantía', 10000, 1650.00,
+        'https://static.vecteezy.com/system/resources/previews/002/389/448/non_2x/cleaning-service-black-glyph-icon-vector.jpg');
 
 -- ===== INSERTAR LOCALES (✅ CORREGIDO - Con ubicación geográfica) =====
 INSERT INTO locales (nombre_local, direccion, id_distrito, aforo_maximo, precio_hora, descripcion, estado, latitud, longitud, url_google_maps)
@@ -77,8 +79,8 @@ VALUES
 (1, 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800', 'Montaje para boda'),
 
 -- Terraza Verde
-(2, 'https://images.unsplash.com/photo-1734705797907-a2ad9e6c71a2?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDJ8fHxlbnwwfHx8fHw%3D', 'Terraza con jardín vertical'),
-(2, 'https://images.unsplash.com/photo-1734705797879-0c23e9edca21?q=80&w=1169&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Vista superior'),
+(2, 'https://images.unsplash.com/photo-1734705797879-0c23e9edca21?q=80&w=1169&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Terraza con jardín vertical'),
+(2, 'https://images.unsplash.com/photo-1734705797907-a2ad9e6c71a2?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDJ8fHxlbnwwfHx8fHw%3D', 'Vista superior'),
 (2, 'https://images.unsplash.com/photo-1734705797834-a356d77e4140?q=80&w=1169&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Vista interior'),
 
 -- Centro Empresarial
@@ -87,9 +89,9 @@ VALUES
 (3, 'https://images.unsplash.com/photo-1629969338712-472f4440929d?q=80&w=1218&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Sala de conferencias'),
 
 -- Casa La Molina
-(4, 'https://images.unsplash.com/photo-1658951874380-aa791f7aec29?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Patio colonial'),
-(4, 'https://images.unsplash.com/photo-1658951874107-b597582d3768?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDJ8fHxlbnwwfHx8fHw%3D', 'Patio colonial'),
-(4, 'https://images.unsplash.com/photo-1658951868644-4b7aba111915?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Patio colonial'),
+(4, 'https://images.unsplash.com/photo-1733244738988-70b1f4b96c37?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Patio colonial'),
+(4, 'https://images.unsplash.com/photo-1733244739136-0f22b674a18b?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Patio colonial'),
+(4, 'https://images.unsplash.com/photo-1733244739141-9fd6c0a75a1b?q=80&w=749&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Patio colonial'),
 
 -- Roof Top Barranco
 (5, 'https://images.unsplash.com/photo-1752857015590-ab5254f2523f?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Vista panorámica'),
@@ -100,10 +102,14 @@ VALUES
 (6, 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800', 'Cristalería elegante'),
 
 -- Garden Party
-(7, 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=800', 'Jardín íntimo'),
+(7, 'https://images.unsplash.com/photo-1707333513884-34c7881fb4ee?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Jardín íntimo'),
+(7, 'https://images.unsplash.com/photo-1707333514312-39cf7658479c?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Jardín íntimo'),
+(7, 'https://images.unsplash.com/photo-1707333514156-d42751dca70d?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Jardín íntimo'),
 
 -- Loft Industrial
-(8, 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800', 'Estilo industrial');
+(8, 'https://plus.unsplash.com/premium_photo-1664530452596-e1c17e342876?q=80&w=686&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Estilo industrial'),
+(8, 'https://plus.unsplash.com/premium_photo-1664530452485-72ddb634c24c?q=80&w=686&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Estilo industrial'),
+(8, 'https://plus.unsplash.com/premium_photo-1664530452361-9f86e38784b8?q=80&w=686&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Estilo industrial');
 
 -- ===== RELACIONES LOCAL-TIPO EVENTO =====
 INSERT INTO local_tipo_evento (id_local, id_tipo_evento)
@@ -128,7 +134,8 @@ VALUES
 (6, 6),
 -- Garden Party (cumpleaños)
 (7, 3),
--- Loft Industrial (conciertos, corporativo)
+-- Loft Industrial (boda, conciertos, corporativo)
+(8, 1),
 (8, 4),
 (8, 6);
 

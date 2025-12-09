@@ -149,8 +149,17 @@ public class ReservationService {
                     ") excede la capacidad máxima del venue (" + venue.getMaxCapacity() + ")");
         }
 
-        ReservationStatus status = request.getPaymentMethodId() != null ?
-                ReservationStatus.CONFIRMED : ReservationStatus.PENDING;
+        ReservationStatus status = ReservationStatus.PENDING;
+        PaymentMethod paymentMethod = null;
+
+        if (request.getPaymentMethodId() != null) {
+            paymentMethod = paymentMethodRepository.findById(request.getPaymentMethodId())
+                    .orElseThrow(() -> new RuntimeException("Método de pago no encontrado"));
+
+            if (!paymentMethod.getMethodName().equalsIgnoreCase("Transferencia")) {
+                status = ReservationStatus.CONFIRMED;
+            }
+        }
 
         Reservation reservation = Reservation.builder()
                 .user(currentUser)
@@ -201,8 +210,12 @@ public class ReservationService {
         }
 
         if (request.getPaymentMethodId() != null) {
-            PaymentMethod paymentMethod = paymentMethodRepository.findById(request.getPaymentMethodId())
-                    .orElseThrow(() -> new RuntimeException("Método de pago no encontrado"));
+            // paymentMethod ya fue obtenido arriba, no necesitas volver a buscarlo
+            // Solo valida si es null (caso donde no había método de pago)
+            if (paymentMethod == null) {
+                paymentMethod = paymentMethodRepository.findById(request.getPaymentMethodId())
+                        .orElseThrow(() -> new RuntimeException("Método de pago no encontrado"));
+            }
 
             PaymentStatus paymentStatus = PaymentStatus.PENDING;
             if (paymentMethod.getMethodName().equalsIgnoreCase("Tarjeta") ||
@@ -217,6 +230,7 @@ public class ReservationService {
                     .status(paymentStatus)
                     .paymentDate(LocalDateTime.now())
                     .confirmationCode(null)
+                    .receiptUrl(request.getPaymentReceiptUrl())  // ← AGREGAR ESTA LÍNEA
                     .build();
 
             paymentRepository.save(payment);
@@ -322,6 +336,15 @@ public class ReservationService {
                         .build())
                 .collect(Collectors.toList());
 
+        String paymentReceiptUrl = null;
+        String paymentMethodName = null;
+
+        if (reservation.getPayments() != null && !reservation.getPayments().isEmpty()) {
+            Payment lastPayment = reservation.getPayments().get(0);
+            paymentReceiptUrl = lastPayment.getReceiptUrl();
+            paymentMethodName = lastPayment.getPaymentMethod().getMethodName();
+        }
+
         return ReservationResponseDTO.builder()
                 .reservationId(reservation.getReservationId())
                 .reservationDate(reservation.getReservationDate())
@@ -338,6 +361,8 @@ public class ReservationService {
                 .venueAddress(reservation.getVenue().getAddress())
                 .eventTypeId(reservation.getEventType().getEventTypeId())
                 .eventTypeName(reservation.getEventType().getEventTypeName())
+                .paymentReceiptUrl(paymentReceiptUrl)
+                .paymentMethodName(paymentMethodName)
                 .furnitureItems(furnitureDTOs)
                 .build();
     }

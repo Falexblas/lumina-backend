@@ -4,6 +4,9 @@ import com.lumina.luminabackend.dto.reservation.ReservationResponseDTO;
 import com.lumina.luminabackend.entity.reservation.Reservation;
 import com.lumina.luminabackend.entity.reservation.ReservationFurniture;
 import com.lumina.luminabackend.entity.reservation.ReservationStatus;
+import com.lumina.luminabackend.entity.payment.Payment;
+import com.lumina.luminabackend.entity.payment.PaymentMethod;
+import com.lumina.luminabackend.entity.payment.PaymentStatus;
 import com.lumina.luminabackend.repository.reservation.ReservationFurnitureRepository;
 import com.lumina.luminabackend.repository.reservation.ReservationRepository;
 import lombok.RequiredArgsConstructor;
@@ -103,7 +106,6 @@ public class AdminReservationService {
 
         return statistics;
     }
-
     private ReservationResponseDTO mapToResponseDTO(Reservation reservation) {
         List<ReservationFurniture> furnitureItems = reservationFurnitureRepository
                 .findByReservationId(reservation.getReservationId());
@@ -118,6 +120,16 @@ public class AdminReservationService {
                         .subtotal(item.getSubtotal())
                         .build())
                 .collect(Collectors.toList());
+
+        // Obtener información del pago (si existe)
+        String paymentReceiptUrl = null;
+        String paymentMethodName = null;
+
+        if (reservation.getPayments() != null && !reservation.getPayments().isEmpty()) {
+            Payment lastPayment = reservation.getPayments().get(0);
+            paymentReceiptUrl = lastPayment.getReceiptUrl();
+            paymentMethodName = lastPayment.getPaymentMethod().getMethodName();
+        }
 
         return ReservationResponseDTO.builder()
                 .reservationId(reservation.getReservationId())
@@ -139,6 +151,8 @@ public class AdminReservationService {
                 .customerName(reservation.getUser().getFirstName() + " " + reservation.getUser().getLastName())
                 .customerEmail(reservation.getUser().getEmail())
                 .customerPhone(reservation.getUser().getPhone())
+                .paymentReceiptUrl(paymentReceiptUrl)        // ← NUEVO
+                .paymentMethodName(paymentMethodName)        // ← NUEVO
                 .furnitureItems(furnitureDTOs)
                 .build();
     }

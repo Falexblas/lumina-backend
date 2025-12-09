@@ -27,45 +27,81 @@ public class DashboardService {
     private final ReservationRepository reservationRepository;
     private final UserRepository userRepository;
 
-    public DashboardStatsDTO getDashboardStats() {
-        // Total de locales
+    public DashboardStatsDTO getDashboardStats(String period) {
+        // Determinar el rango de fechas según el período
+        LocalDate endDate = LocalDate.now();
+        LocalDate startDate;
+
+        switch (period != null ? period : "month") {
+            case "week":
+                startDate = endDate.minusWeeks(1);
+                break;
+            case "year":
+                startDate = endDate.minusYears(1);
+                break;
+            case "month":
+            default:
+                startDate = endDate.minusMonths(1);
+                break;
+        }
+
+        // Total de locales (no cambia)
         long totalVenues = venueRepository.count();
 
-        // Reservas de hoy
+        // Reservas de hoy (no cambia)
         LocalDate today = LocalDate.now();
         long todayReservations = reservationRepository.countByReservationDate(today);
 
-        // Total de usuarios (clientes)
+        // Total de usuarios (no cambia)
         long totalUsers = userRepository.count();
 
-        // Ingresos del mes actual
-        YearMonth currentMonth = YearMonth.now();
-        BigDecimal monthlyRevenue = reservationRepository.sumTotalAmountByYearAndMonthAndStatus(
-                currentMonth.getYear(),
-                currentMonth.getMonthValue(),
-                ReservationStatus.CONFIRMED
+        // Ingresos del período actual
+        BigDecimal currentRevenue = reservationRepository.sumTotalAmountByCreatedAtRangeAndStatus(
+                startDate, endDate, ReservationStatus.CONFIRMED
         );
 
-        // Si no hay ingresos, retornar 0
-        if (monthlyRevenue == null) {
-            monthlyRevenue = BigDecimal.ZERO;
+        // Ingresos del período anterior (para calcular crecimiento)
+        LocalDate previousStartDate;
+        LocalDate previousEndDate = startDate.minusDays(1);
+
+        switch (period != null ? period : "month") {
+            case "week":
+                previousStartDate = previousEndDate.minusWeeks(1);
+                break;
+            case "year":
+                previousStartDate = previousEndDate.minusYears(1);
+                break;
+            case "month":
+            default:
+                previousStartDate = previousEndDate.minusMonths(1);
+                break;
         }
 
-        // Reservas pendientes
+        BigDecimal previousRevenue = reservationRepository.sumTotalAmountByCreatedAtRangeAndStatus(
+                previousStartDate, previousEndDate, ReservationStatus.CONFIRMED
+        );
+
+        // Reservas del período actual
+        long currentReservations = reservationRepository.countByCreatedAtRange(startDate, endDate);
+
+        // Reservas del período anterior
+        long previousReservations = reservationRepository.countByCreatedAtRange(previousStartDate, previousEndDate);
+
+        // Reservas pendientes (no cambia)
         long pendingReservations = reservationRepository.countByStatus(ReservationStatus.PENDING);
 
-        // Últimas 5 reservas (actividad reciente) - mapeo simplificado
+        // Últimas 5 reservas (no cambia)
         List<Reservation> recentReservationsList = reservationRepository.findAllByOrderByCreatedAtDesc()
                 .stream()
                 .limit(5)
                 .collect(Collectors.toList());
-        
+
         List<ReservationResponseDTO> recentReservations = recentReservationsList.stream()
                 .map(this::mapToSimpleDTO)
                 .collect(Collectors.toList());
 
-        // Datos para gráficos
-        List<DashboardStatsDTO.MonthlyData> monthlyData = getMonthlyData();
+        // Datos para gráficos (ajustar según período)
+        List<DashboardStatsDTO.MonthlyData> monthlyData = getMonthlyData(period);
         Map<String, Long> reservationsByStatus = getReservationsByStatus();
         List<DashboardStatsDTO.VenuePopularity> topVenues = getTopVenues();
         List<DashboardStatsDTO.FurniturePopularity> topFurniture = getTopFurniture();
@@ -75,7 +111,10 @@ public class DashboardService {
                 .totalVenues(totalVenues)
                 .todayReservations(todayReservations)
                 .totalUsers(totalUsers)
-                .monthlyRevenue(monthlyRevenue)
+                .monthlyRevenue(currentRevenue != null ? currentRevenue : BigDecimal.ZERO)
+                .previousMonthRevenue(previousRevenue != null ? previousRevenue : BigDecimal.ZERO)
+                .currentPeriodReservations(currentReservations)
+                .previousPeriodReservations(previousReservations)
                 .pendingReservations(pendingReservations)
                 .recentReservations(recentReservations)
                 .monthlyRevenue6Months(monthlyData)
@@ -87,31 +126,33 @@ public class DashboardService {
                 .build();
     }
 
-    private List<DashboardStatsDTO.MonthlyData> getMonthlyData() {
+    private List<DashboardStatsDTO.MonthlyData> getMonthlyData(String period) {
         List<DashboardStatsDTO.MonthlyData> monthlyData = new ArrayList<>();
         YearMonth currentMonth = YearMonth.now();
-        
-        for (int i = 5; i >= 0; i--) {
+
+        int periods = "year".equals(period) ? 12 : 6;
+
+        for (int i = periods - 1; i >= 0; i--) {
             YearMonth month = currentMonth.minusMonths(i);
-            
+
             BigDecimal revenue = reservationRepository.sumTotalAmountByYearAndMonthAndStatus(
                     month.getYear(),
                     month.getMonthValue(),
                     ReservationStatus.CONFIRMED
             );
-            
+
             long reservations = reservationRepository.countByYearAndMonth(
                     month.getYear(),
                     month.getMonthValue()
             );
-            
+
             monthlyData.add(DashboardStatsDTO.MonthlyData.builder()
                     .month(month.getMonth().getDisplayName(TextStyle.SHORT, new Locale("es", "PE")))
                     .revenue(revenue != null ? revenue : BigDecimal.ZERO)
                     .reservations(reservations)
                     .build());
         }
-        
+
         return monthlyData;
     }
 

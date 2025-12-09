@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -19,8 +20,9 @@ public class AdminDashboardController {
     private final DashboardService dashboardService;
 
     @GetMapping("/stats")
-    public ResponseEntity<ApiResponseDTO<DashboardStatsDTO>> getDashboardStats() {
-        DashboardStatsDTO stats = dashboardService.getDashboardStats();
+    public ResponseEntity<ApiResponseDTO<DashboardStatsDTO>> getDashboardStats(
+            @RequestParam(required = false, defaultValue = "month") String period) {
+        DashboardStatsDTO stats = dashboardService.getDashboardStats(period);
         return ResponseEntity.ok(ApiResponseDTO.success("Estadísticas obtenidas correctamente", stats));
     }
 }

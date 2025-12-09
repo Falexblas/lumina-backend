@@ -21,6 +21,7 @@ public class ReservationRequestDTO {
     private List<FurnitureItemRequestDTO> furnitureItems;
     private Integer paymentMethodId;
     private String approvalCode;
+    private String paymentReceiptUrl;
 
     @Data
     public static class FurnitureItemRequestDTO {

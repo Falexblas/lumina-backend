@@ -21,6 +21,9 @@ public class DashboardStatsDTO {
     private BigDecimal monthlyRevenue;
     private Long pendingReservations;
     private List<ReservationResponseDTO> recentReservations;
+    private BigDecimal previousMonthRevenue;
+    private Long currentPeriodReservations;
+    private Long previousPeriodReservations;
     
     // Datos para gráficos
     private List<MonthlyData> monthlyRevenue6Months;

@@ -31,6 +31,9 @@ public class ReservationResponseDTO {
     private Integer eventTypeId;
     private String eventTypeName;
 
+    private String paymentReceiptUrl;
+    private String paymentMethodName;
+
     // Información del cliente (para admin)
     private Integer userId;
     private String customerName;
