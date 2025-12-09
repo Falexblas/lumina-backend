@@ -29,9 +29,12 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-### VS Code ###
-.vscode/
+### Environment ###
+.env
+.env.local
+.env.production
+application-local.properties
 
-
-#Ignore windsurf AI rules
-.windsurfrules
+### Logs ###
+*.log
+logs/

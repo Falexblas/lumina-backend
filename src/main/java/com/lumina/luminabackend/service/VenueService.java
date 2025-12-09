@@ -132,8 +132,7 @@ public class VenueService {
     public AdminVenueDTO findByIdForAdmin(Integer id) {
         Venue venue = venueRepository.findByIdWithDetails(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Local no encontrado con ID: " + id));
-        
-        // Cargar eventTypes en segunda query
+
         venueRepository.findByIdWithEventTypes(id);
         
         return convertToAdminDTO(venue);
@@ -226,14 +225,12 @@ public class VenueService {
         if (!venueRepository.existsById(id)) {
             throw new ResourceNotFoundException("Local no encontrado con ID: " + id);
         }
-        
-        // Validar que no tenga reservas confirmadas
+
         long confirmedReservations = reservationRepository.countByVenueVenueIdAndStatus(id, ReservationStatus.CONFIRMED);
         if (confirmedReservations > 0) {
             throw new BusinessException("No se puede eliminar el local porque tiene " + confirmedReservations + " reserva(s) confirmada(s)");
         }
-        
-        // Validar que no tenga reservas pendientes
+
         long pendingReservations = reservationRepository.countByVenueVenueIdAndStatus(id, ReservationStatus.PENDING);
         if (pendingReservations > 0) {
             throw new BusinessException("No se puede eliminar el local porque tiene " + pendingReservations + " reserva(s) pendiente(s)");

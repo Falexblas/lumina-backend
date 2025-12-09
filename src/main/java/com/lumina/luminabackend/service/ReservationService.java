@@ -66,7 +66,7 @@ public class ReservationService {
                 .orElseThrow(() -> new RuntimeException("Venue no encontrado"));
 
         Duration duration = Duration.between(request.getStartTime(), request.getEndTime());
-        int totalHours = Math.max(1, (int) duration.toHours()); // Mínimo 1 hora
+        int totalHours = Math.max(1, (int) duration.toHours());
 
         BigDecimal venueCost = venue.getPricePerHour().multiply(BigDecimal.valueOf(totalHours));
 
@@ -210,8 +210,6 @@ public class ReservationService {
         }
 
         if (request.getPaymentMethodId() != null) {
-            // paymentMethod ya fue obtenido arriba, no necesitas volver a buscarlo
-            // Solo valida si es null (caso donde no había método de pago)
             if (paymentMethod == null) {
                 paymentMethod = paymentMethodRepository.findById(request.getPaymentMethodId())
                         .orElseThrow(() -> new RuntimeException("Método de pago no encontrado"));
@@ -230,7 +228,7 @@ public class ReservationService {
                     .status(paymentStatus)
                     .paymentDate(LocalDateTime.now())
                     .confirmationCode(null)
-                    .receiptUrl(request.getPaymentReceiptUrl())  // ← AGREGAR ESTA LÍNEA
+                    .receiptUrl(request.getPaymentReceiptUrl())
                     .build();
 
             paymentRepository.save(payment);
@@ -270,7 +268,7 @@ public class ReservationService {
         if (reservation.getVenue().getPhotos() != null) {
             venuePhotos = reservation.getVenue().getPhotos().stream()
                     .map(VenuePhoto::getPhotoUrl)
-                    .limit(3) // Máximo 3 fotos
+                    .limit(3)
                     .collect(Collectors.toList());
         }
 
@@ -293,7 +291,7 @@ public class ReservationService {
                 .customerEmail(currentUser.getEmail())
                 .customerPhone(currentUser.getPhone())
                 .costBreakdown(buildCostBreakdown(reservation))
-                .furnitureItems(buildFurnitureItemsFromRepository(reservationId)) // 🔥 USANDO REPOSITORY
+                .furnitureItems(buildFurnitureItemsFromRepository(reservationId))
                 .paymentInfo(buildPaymentInfo(reservation))
                 .build();
     }
@@ -393,11 +391,11 @@ public class ReservationService {
 
         return furnitureDetails.stream()
                 .map(row -> ReservationSuccessDTO.FurnitureItemDetail.builder()
-                        .furnitureName((String) row[1])       // f.furnitureName
-                        .quantity((Integer) row[2])           // rf.quantity
-                        .unitPrice((BigDecimal) row[3])       // rf.unitPrice
-                        .subtotal((BigDecimal) row[4])        // rf.subtotal
-                        .photoUrl((String) row[5])            // f.photoUrl
+                        .furnitureName((String) row[1])
+                        .quantity((Integer) row[2])
+                        .unitPrice((BigDecimal) row[3])
+                        .subtotal((BigDecimal) row[4])
+                        .photoUrl((String) row[5])
                         .build())
                 .collect(Collectors.toList());
     }
